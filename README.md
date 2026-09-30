@@ -1,122 +1,198 @@
 # Nihongo Quest
 
-Aplikasi belajar bahasa Jepang pribadi dengan **React + Vite, JavaScript, Tailwind CSS, React Router, dan Lucide React**. Versi pertama menyelesaikan alur 46 hiragana dasar. Semua progres awal adalah nol; tidak ada login atau data contoh pengguna.
+Aplikasi belajar bahasa Jepang berbahasa Indonesia yang berfokus pada **46 hiragana dasar**. Belajar melalui kartu, kuis, dan latihan menulis, lalu pantau XP, streak, serta penguasaan setiap huruf.
+
+Aplikasi berjalan di browser tanpa akun atau database. Progres disimpan secara lokal; pengguna baru mulai dengan **0 XP dan level 1**.
+
+## Fitur
+
+- Dashboard berisi XP, level, streak, akurasi, penguasaan, misi harian, dan aktivitas terakhir.
+- Peta 46 hiragana dalam susunan gojūon, termasuk kelompok Y, W, dan ん.
+- Kartu belajar per kelompok dengan romaji, contoh kata Jepang, dan arti Indonesia.
+- Kuis 10 soal dengan tiga bentuk: kana ke romaji, romaji ke kana, dan ketik romaji.
+- Latihan umum untuk huruf yang sudah dipelajari dan latihan adaptif untuk huruf yang masih sulit.
+- Kanvas menulis dengan mode **Meniru contoh** dan **Uji hafalan**, pola bantu, pemeriksaan bentuk, urungkan, dan hapus. Mendukung mouse, sentuhan, pena, serta keyboard.
+- Hasil kuis, riwayat, progres per kelompok, dan cadangan JSON melalui ekspor/impor.
+- Tampilan responsif dengan sidebar desktop, navigasi bawah pada mobile, serta dukungan fokus keyboard dan reduced motion.
+
+## Teknologi
+
+React 19, Vite 7, JavaScript, Tailwind CSS 4, React Router 7 dengan `HashRouter`, dan Lucide React. Pengujian menggunakan test runner bawaan Node.js.
 
 ## Instalasi dan menjalankan
 
-Gunakan Node.js **22.12 atau lebih baru** (Node 22 LTS disarankan).
+Siapkan **Node.js 22.12 atau lebih baru** dari rilis yang didukung Vite, beserta npm. Jalankan perintah berikut dari root proyek, yaitu folder yang memuat `package.json`:
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
 
-Buka URL yang dicetak Vite, biasanya **http://127.0.0.1:5173/**. Gunakan alamat dan browser yang sama setiap kali belajar karena localStorage terpisah per origin. `localhost` dan `127.0.0.1` memiliki progres berbeda.
+`npm ci` memasang dependensi sesuai `package-lock.json`. Buka URL yang dicetak Vite, biasanya [http://127.0.0.1:5173/](http://127.0.0.1:5173/).
+
+### Perintah proyek
+
+| Perintah | Kegunaan |
+| --- | --- |
+| `npm run dev` | Menjalankan server development pada `127.0.0.1`. |
+| `npm test` | Menjalankan pengujian logika progres dan pemeriksaan tulisan. |
+| `npm run build` | Membuat build produksi di folder `dist/`. |
+| `npm run preview` | Meninjau hasil build secara lokal pada `127.0.0.1`. |
+
+Untuk meninjau build produksi:
 
 ```sh
 npm run build
 npm run preview
 ```
 
-Build produksi berada di `dist/`. Preview biasanya tersedia di **http://127.0.0.1:4173/**. Jika Apache XAMPP aktif dan proyek berada di `C:\xampp\htdocs\japaneselearn`, hasil build bisa dibuka di **http://localhost/japaneselearn/dist/**. `base: './'` dan HashRouter mendukung hosting dalam subfolder dan refresh halaman tanpa aturan rewrite Apache.
+Preview biasanya tersedia di [http://127.0.0.1:4173/](http://127.0.0.1:4173/). Ikuti URL di terminal jika port tersebut sedang digunakan.
 
-Halaman sumber di root proyek perlu dijalankan melalui Vite; untuk Apache gunakan folder hasil build `dist`. Gunakan ekspor/impor untuk memindahkan progres dari alamat development ke alamat produksi.
+### Menjalankan melalui XAMPP
 
-## Fitur
+Jika proyek berada di `C:\xampp\htdocs\japaneselearn`:
 
-- Dashboard XP, level, streak, akurasi, penguasaan, misi harian, dan aktivitas terakhir.
-- Peta lengkap 46 hiragana dalam susunan gojūon; kelompok Y, W, dan ん tidak memiliki karakter buatan untuk sel kosong.
-- Kartu belajar per kelompok dengan contoh kata berbahasa Jepang dan arti Indonesia.
-- Kuis 10 soal dengan tiga bentuk: kana ke romaji, romaji ke kana, dan ketik romaji.
-- Kanvas latihan menulis untuk 46 hiragana: mode meniru contoh dengan pola bantu, serta uji hafalan 10 soal dari romaji tanpa contoh. Mendukung mouse, sentuhan, pena, dan keyboard; tersedia urungkan dan hapus.
-- Tombol Periksa tulisan memberikan hasil perkiraan bentuk, lalu menampilkan hiragana yang benar. Contoh tulisan tangan memakai pola goresan KanjiVG yang disertakan dalam aplikasi, sehingga latihan tidak perlu mengirim gambar ke layanan lain.
-- Latihan umum dari kana yang telah diperkenalkan atau pernah dijawab. Latihan adaptif memprioritaskan kana dengan akurasi di bawah 70%, atau review jika tidak ada kelemahan.
-- Hasil, riwayat, progres per kelompok, ekspor JSON, impor tervalidasi, dan reset dengan konfirmasi.
-- Sidebar desktop dan navigasi bawah pada mobile; focus state, label form, dialog native, dan reduced motion.
+1. Jalankan `npm run build` dari folder proyek.
+2. Aktifkan Apache melalui XAMPP.
+3. Buka [http://localhost/japaneselearn/dist/](http://localhost/japaneselearn/dist/).
 
-## Struktur folder
+Apache menyajikan file statis dari `dist/`. Konfigurasi Vite `base: './'` dan `HashRouter` mendukung hosting dalam subfolder serta refresh halaman tanpa aturan rewrite Apache. Untuk mengembangkan kode sumber, gunakan `npm run dev`; bangun ulang aplikasi setelah mengubah kode yang akan disajikan Apache.
+
+## Mulai belajar
+
+1. Pilih **Mulai Belajar** di dashboard atau pilih kelompok di **Peta Hiragana**.
+2. Baca kartu dan klik **Sudah Saya Kenal** untuk mencatat pengenalan huruf. Membuka kartu saja belum menambah progres.
+3. Setelah semua huruf kelompok dikenali, pilih **Mulai kuis kelompok**. Ulangi latihan melalui **Huruf Sulit** sesuai kebutuhan.
+4. Gunakan **Latihan Menulis** atau tombol **Tulis huruf ini** pada kartu untuk melatih bentuk huruf. Pantau hasil belajar di **Progres Saya**.
+
+## Progres dan penyimpanan
+
+Progres disimpan sebagai snapshot `version: 1` di `localStorage` dengan kunci `nihongo-quest.progress.v1`. Data mencakup statistik kana, XP, tanggal aktivitas, misi harian, riwayat pelajaran, hasil kuis, dan sesi kuis aktif.
+
+Gunakan **browser dan origin yang sama** untuk melanjutkan belajar. Origin mencakup protokol, hostname, dan port: `localhost` dan `127.0.0.1`, serta port development dan preview, memiliki penyimpanan terpisah. Gunakan ekspor/impor untuk memindahkan progres antaralamat atau perangkat. Jika penyimpanan rusak atau ditolak browser, aplikasi menampilkan pemberitahuan dan tetap dapat digunakan.
+
+### Status dan akurasi
+
+| Status | Syarat |
+| --- | --- |
+| Baru | Belum diperkenalkan dan belum pernah dijawab. |
+| Dipelajari | Pernah diperkenalkan atau dijawab, tetapi belum memenuhi syarat penguasaan. |
+| Dikuasai | Minimal 5 jawaban dengan rasio benar minimal 80%. |
+
+Status penguasaan dapat turun jika akurasi menurun. Jumlah "sudah dipelajari" pada dashboard mencakup huruf yang dikuasai; tiga kategori pada halaman progres dihitung terpisah. Akurasi keseluruhan dihitung dari total jawaban benar dibagi total jawaban, bukan rata-rata persentase setiap kana. Tanpa jawaban, akurasi bernilai 0%.
+
+### XP dan level
+
+| Aktivitas | XP |
+| --- | --- |
+| Mengenali kana pertama kali | +2, sekali per kana |
+| Menjawab soal kuis dengan benar | +2 per jawaban |
+| Menyelesaikan sesi 10 soal | +10 |
+| Menyelesaikan kuis sempurna | Tambahan +10 |
+
+Kuis sempurna menghasilkan **40 XP**. Jawaban pada sesi yang ditinggalkan tetap tercatat, tanpa bonus penyelesaian. Level dihitung dengan `floor(XP / 100) + 1`.
+
+Jawaban tersimpan langsung dan dikunci agar tidak dihitung dua kali. Bonus diberikan saat sesi selesai. Refresh dapat melanjutkan kuis aktif atau membuka hasil tanpa menggandakan XP.
+
+### Misi harian, streak, dan latihan adaptif
+
+- Misi mengenali satu kelompok selesai ketika huruf terakhir yang belum dikenali dalam kelompok diperkenalkan pertama kali.
+- Misi latihan menghitung 10 jawaban hari ini, termasuk jawaban salah.
+- Tanggal aktivitas dan streak mengikuti zona **Asia/Jakarta**. Streak kemarin tetap terlihat hari ini; melewatkan satu hari penuh memutus rangkaian.
+- Latihan adaptif memprioritaskan kana yang pernah dijawab dan memiliki akurasi di bawah 70%. Bobot `1 + (1 - akurasi) × 4` membuat huruf yang lebih lemah lebih sering dipilih. Jika tidak ada huruf sulit, latihan menjadi review huruf yang sudah dipelajari.
+- Tanpa riwayat jawaban, latihan adaptif mengarahkan pengguna ke kelompok vokal dan kuis pertama. Kuis kelompok hanya memakai huruf dari kelompok tersebut; jumlah pilihan menyesuaikan ukuran kelompok.
+- Untuk jawaban ketik, `wo` menerima `o`. Alternatif `o` tidak dijadikan pilihan pengecoh dalam soal kana ke romaji untuk を.
+
+## Latihan menulis
+
+Pilih satu kelompok atau semua 46 hiragana di halaman **Latihan Menulis**:
+
+- **Meniru contoh:** contoh tulisan tangan dan pola tipis ditampilkan. Pola bantu dapat dimatikan.
+- **Uji hafalan:** jawab 10 soal romaji dengan menulis hiragana. Contoh disembunyikan sampai tulisan diperiksa, lalu hasil sesi menampilkan huruf yang dapat dilatih ulang.
+
+Tombol **Periksa tulisan** membandingkan bentuk dan jumlah goresan dengan referensi lokal, termasuk kandidat hiragana lain. Urutan dan arah goresan tidak dinilai secara ketat. Pemeriksaan berjalan sepenuhnya di browser tanpa mengirim gambar ke layanan lain.
+
+Hasil merupakan perkiraan kemiripan, bukan OCR atau penilaian kaligrafi; variasi tulisan tangan dapat salah dinilai. Gunakan contoh untuk memeriksa kembali. Tulisan kosong, titik kecil, goresan yang kurang, dan coretan tidak otomatis dinilai benar.
+
+**Latihan menulis belum menambah XP, akurasi, atau penguasaan pada progres utama.** Hasil menulis berlaku selama sesi halaman; refresh atau pindah halaman memulai ulang sesi tersebut.
+
+### Keyboard pada kanvas
+
+Fokuskan kanvas dengan klik atau tombol Tab sebelum menggunakan kontrol berikut:
+
+| Tombol | Fungsi |
+| --- | --- |
+| Panah | Memindahkan pena. |
+| Shift + panah | Memindahkan pena dengan langkah kecil. |
+| Spasi | Memulai atau mengakhiri goresan. |
+| Enter | Mengakhiri goresan. |
+| Escape | Membatalkan goresan yang sedang aktif. |
+| Ctrl/Cmd + Z | Mengurungkan goresan terakhir. |
+
+## Cadangan dan pemulihan
+
+Buka **Pengaturan** untuk mengelola data:
+
+- **Ekspor JSON** mengunduh seluruh snapshot progres sebagai cadangan.
+- **Impor JSON** menerima file maksimal 5 MB. Aplikasi memeriksa versi, ID kana, hitungan, tanggal, soal, hasil, dan konsistensi XP. File yang tidak valid tidak mengubah progres; file valid meminta konfirmasi sebelum mengganti data saat ini.
+- **Reset progres** meminta konfirmasi sebelum menghapus progres dari browser.
+
+Ekspor cadangan sebelum menghapus data browser, mengganti origin, atau pindah perangkat.
+
+## Struktur proyek
 
 ```text
 src/
-  main.jsx                 # Entry point dan React Router
+  main.jsx                 # Entry point dan rute aplikasi
   styles.css               # Tailwind, tema, komponen, dan breakpoint
   components/
-    Layout.jsx             # Sidebar, topbar, navigasi mobile
-    ui.jsx                 # Progress bar, badge, dialog, empty state
-    HandwritingCanvas.jsx  # Pointer/keyboard, goresan, pola bantu, hapus/urungkan
+    Layout.jsx             # Sidebar, topbar, dan navigasi mobile
+    ui.jsx                 # Progress bar, badge, dialog, dan empty state
+    HandwritingCanvas.jsx  # Input pointer/keyboard dan kontrol kanvas
   context/
-    ProgressContext.jsx    # State React dan penulisan localStorage
+    ProgressContext.jsx    # State React dan penyimpanan localStorage
   data/
-    kana.js                # 46 kana, kelompok, romaji, alternatif, contoh
-    hiraganaStrokes.js      # Pola goresan KanjiVG dan titik referensi lokal
+    kana.js                # 46 kana, kelompok, romaji, dan contoh kata
+    hiraganaStrokes.js      # Pola KanjiVG dan titik referensi lokal
   lib/
-    progress.js            # XP, streak, status, kuis, adaptif, validasi
-    handwriting.js         # Perbandingan bentuk tulisan secara lokal
+    progress.js            # XP, streak, kuis, adaptif, dan validasi
+    handwriting.js         # Pemeriksaan kemiripan tulisan
   pages/
     Dashboard.jsx
     Hiragana.jsx
     Learn.jsx
-    Writing.jsx              # Meniru contoh dan 10 soal hafalan dengan kanvas
+    Writing.jsx
     Quiz.jsx
     Results.jsx
     Difficult.jsx
     Progress.jsx
     Settings.jsx
 tests/
-  progress.test.js         # Pengujian logika tanpa browser
-  handwriting.test.js      # Bentuk benar/salah, variasi tulisan, dan coretan
+  progress.test.js          # Pengujian logika progres
+  handwriting.test.js       # Pengujian pola, variasi tulisan, dan coretan
 public/
   favicon.svg
-  kanjivg-license.txt         # Sumber, atribusi, dan lisensi pola goresan
+  kanjivg-license.txt       # Atribusi dan lisensi pola goresan
+package.json               # Dependensi dan perintah npm
+package-lock.json          # Versi dependensi untuk npm ci
+vite.config.js             # Plugin React/Tailwind dan base relatif
 ```
 
-## Cara kerja progres
-
-Data disimpan sebagai satu snapshot berversi (`version: 1`) di localStorage dengan kunci `nihongo-quest.progress.v1`. Snapshot memuat statistik 46 kana, XP, tanggal aktivitas, misi per tanggal, riwayat pelajaran, hasil kuis, serta sesi kuis aktif. Data kosong memulai progres nol; data rusak atau penyimpanan yang ditolak menghasilkan pemberitahuan dan tetap memungkinkan aplikasi berjalan.
-
-- **Baru:** belum diperkenalkan dan belum memiliki jawaban.
-- **Dipelajari:** pernah diperkenalkan atau dijawab, tetapi belum memenuhi penguasaan.
-- **Dikuasai:** minimal 5 jawaban dan rasio benar minimal 80%. Status dapat turun jika akurasi menurun.
-- Jumlah “sudah dipelajari” pada dashboard mencakup kana dikuasai. Tiga kategori pada halaman progres saling terpisah.
-- Akurasi keseluruhan dihitung dari seluruh jawaban benar dibagi seluruh jawaban, bukan rata-rata persentase setiap kana. Tanpa jawaban, nilainya 0%.
-
-Pengenalan pertama memberikan **2 XP sekali per kana**. Jawaban benar memberikan **2 XP**, langsung tersimpan. Sesi yang diselesaikan memberikan **10 XP**, dengan tambahan **10 XP** jika sempurna. Kuis sempurna menghasilkan 40 XP. Jawaban sesi yang ditinggalkan tetap tercatat, tanpa bonus penyelesaian. Level = `floor(XP / 100) + 1`.
-
-Jawaban dikunci melalui pemeriksaan ID sesi, ID soal, indeks, dan jumlah jawaban. Bonus diberikan dalam aksi finalisasi, bukan saat halaman hasil dirender. Refresh dapat melanjutkan sesi aktif atau membuka hasil tanpa menggandakan XP.
-
-Misi kelompok selesai ketika huruf terakhir dalam kelompok diperkenalkan pertama kali. Misi latihan menghitung jawaban hari ini, termasuk jawaban salah. Tanggal menggunakan `Intl.DateTimeFormat` dengan zona **Asia/Jakarta**. Streak dihitung dari hari berurutan; streak kemarin tetap terlihat hari ini, tetapi satu hari penuh yang terlewat mereset rangkaian.
-
-Adaptif hanya menganggap kana dengan riwayat dan akurasi di bawah 70% sebagai sulit. Tanpa riwayat jawaban, pengguna diarahkan ke kelompok vokal dan kuis pertama. Bobot `1 + (1 - akurasi) × 4` membuat huruf lemah lebih sering terpilih. Pilihan pengecoh berasal dari kana yang sudah dipelajari. Kuis kelompok hanya menggunakan kelompok yang dipilih; jumlah pilihan menyesuaikan ukuran kelompok. `wo` menerima `o` untuk jawaban ketik, dan `o` tidak dipakai sebagai pengecoh dalam soal romaji untuk を.
-
-### Latihan menulis
-
-Buka **Latihan Menulis** di navigasi atau **Tulis huruf ini** pada kartu belajar. Pilih kelompok huruf, atau semua 46 hiragana. Mode **Meniru contoh** memperlihatkan contoh tulisan tangan dan pola tipis yang bisa dimatikan. Mode **Uji hafalan** mengacak 10 soal romaji, menyembunyikan contoh sampai jawaban diperiksa, lalu menampilkan hasil sesi dan huruf yang dapat dilatih ulang.
-
-Pemeriksaan berlangsung sepenuhnya di browser dengan membandingkan bentuk dan goresan terhadap referensi lokal, termasuk kandidat hiragana lain. Ini bantuan latihan berbasis kemiripan, bukan OCR atau penilaian kaligrafi: variasi tulisan tangan bisa salah dinilai. Tulisan kosong, titik kecil, dan coretan yang tidak sesuai tidak otomatis mendapat hasil benar. Latihan menulis tidak menambah XP, akurasi, atau penguasaan pada progres utama. Hasil menulis hanya berlaku selama sesi halaman; refresh atau pindah halaman memulai ulang latihan ini. Progres belajar dan kuis yang sudah ada tetap tersimpan seperti sebelumnya.
-
-Keyboard pada kanvas: tombol panah memindahkan pena, spasi mulai/akhiri goresan, Enter mengakhiri goresan, Shift + panah untuk langkah kecil, dan Ctrl/Cmd + Z untuk urungkan. Panduan gambar berasal dari [KanjiVG](https://kanjivg.tagaini.net/) dengan atribusi dan lisensi **CC BY-SA 3.0** dalam `public/kanjivg-license.txt`.
-
-## Cadangan dan validasi
-
-Pengaturan menyediakan ekspor seluruh snapshot ke JSON. Impor memeriksa versi, semua ID kana, hitungan bilangan bulat, tanggal, struktur soal, pilihan unik, hasil, dan konsistensi XP. File maksimal 5 MB. Impor invalid tidak mengubah progres; impor valid meminta konfirmasi penggantian. Reset juga meminta konfirmasi. Ekspor dulu sebelum menghapus data browser atau pindah perangkat.
-
-## Verifikasi
+## Pengujian
 
 ```sh
 npm test
 npm run build
 ```
 
-Pengujian otomatis mencakup inventory kana, progres nol, XP satu kali, penguasaan, penguncian soal, kuis sempurna/tidak sempurna, kelompok kecil, alternatif romaji, pemilihan berbobot, batas tengah malam Jakarta, streak, level, pemulihan sesi, serta impor data rusak.
+Pengujian progres mencakup inventaris 46 kana, progres awal, XP, penguasaan, penguncian jawaban, hasil kuis, kelompok kecil, alternatif romaji, pemilihan adaptif, tanggal Jakarta, streak, level, pemulihan sesi, dan validasi cadangan.
 
-Pengujian menulis mencakup semua 46 pola benar, 2.070 pasangan huruf salah, sketsa sederhana yang ditulis manual, variasi ukuran/posisi/arah, goresan kosong/kecil/hilang, coretan, variasi pointer, dan regresi huruf mirip れ/わ. Alur browser menulis juga diperiksa: contoh tersembunyi pada soal, muncul setelah pemeriksaan, satu sesi 10 soal sampai hasil, tulisan く yang mendapat Benar, masukan pointer dan keyboard, urungkan/hapus, pola bantu, serta kanvas persegi tanpa overflow pada layar 360 px dan 320 px.
+Pengujian tulisan mencakup 46 pola benar, 2.070 pasangan huruf salah, sketsa manual, variasi ukuran/posisi/urutan goresan, goresan kosong/kecil/hilang, coretan, variasi titik pointer, serta regresi huruf mirip れ/わ. Pengujian ini berjalan melalui Node.js; tampilan dan interaksi browser perlu diperiksa secara manual.
 
-Alur browser diperiksa pada desktop dan mobile: belajar → kuis dengan ketiga variasi → hasil → dashboard/progres; refresh pada kartu, sesi aktif, dan hasil; latihan adaptif; tombol ekspor; dialog reset dan pembatalan. Pengujian browser menggunakan origin terpisah sehingga preview pengguna tetap berawal dari nol.
+Cakupan aplikasi saat ini adalah hiragana dasar. Katakana, modul kosakata, grammar, kanji, SRS, dan roadmap JLPT belum tersedia.
 
-Validasi impor dan round trip cadangan diuji otomatis. Uji unggah file melalui browser tidak diselesaikan karena pemeriksaan izin menolak unggah file ke preview lokal; fungsi impor tetap diimplementasikan dengan pemilih file dan konfirmasi penggantian.
+## Referensi dan atribusi
 
-Katakana, kosakata sebagai modul, grammar, kanji, SRS, dan roadmap JLPT berada di luar versi pertama.
-
-Referensi inventory kana: [Japan Foundation — Irodori Hiragana](https://www2.jpfbj.cn/irodori/resources/pdf/X_Hiragana_All.pdf). Setup mengikuti [Vite](https://vite.dev/guide/) dan [Tailwind CSS untuk Vite](https://tailwindcss.com/docs/installation/using-vite).
-#   s a g i r i - s t u d y  
- 
+- Inventaris kana: [Japan Foundation — Irodori Hiragana](https://www2.jpfbj.cn/irodori/resources/pdf/X_Hiragana_All.pdf).
+- Pola goresan: [KanjiVG](https://kanjivg.tagaini.net/), karya Ulrich Apel dan kontributor KanjiVG. Data pola dan turunannya menggunakan **CC BY-SA 3.0**; atribusi, sumber, dan teks lisensi tersedia di [public/kanjivg-license.txt](public/kanjivg-license.txt).
+- Dokumentasi alat: [Vite](https://vite.dev/guide/) dan [Tailwind CSS untuk Vite](https://tailwindcss.com/docs/installation/using-vite).
